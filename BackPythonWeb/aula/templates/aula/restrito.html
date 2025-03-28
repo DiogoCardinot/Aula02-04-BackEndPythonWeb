@@ -1,13 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Restrita</title>
+    <link rel="stylesheet" href="{% static 'css/restrito.css' %}">
 </head>
 <body>
-    <h1>Bem-vindo à página restrita, {{ user.username }}!</h1>
-    <p>Apenas usuários autenticados podem ver este conteúdo.</p>
-    <a href="{% url 'logout' %}">Sair</a>
+    <div class="wrapper">
+        <h1>Bem-vindo à página restrita, {{ user.username }}!</h1>
+        <p>Apenas usuários autenticados podem ver este conteúdo.</p>
+        <div class="botao-wrapper">
+            <a href="{% url 'logout' %}">Sair</a>
+            <a href="{% url 'home' %}" class="link"> Voltar
+            </a>
+        </div>
+    </div>
 </body>
 </html>

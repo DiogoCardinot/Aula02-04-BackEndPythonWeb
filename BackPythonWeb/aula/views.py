@@ -11,8 +11,10 @@ def Home(request):
 # Acesso aos dados da base de dados
 def ConectaBaseDados(request):
     alunos = Aluno.objects.all()
+    total_alunos = Aluno.objects.all().count()
     context={
         'alunos' : alunos,
+        'total_alunos': total_alunos
     }
 
     return render(request, 'aula/alunos.html', context)
@@ -27,11 +29,12 @@ def ConsumirAPI(request):
     }
     return render(request, 'aula/ConsumirAPI.html', context)
 
-
+# Autenticacao necessaria para acessar a pagina
 @login_required(login_url='/aula/login/')
 def PaginaRestrita(request):
     return render(request, 'aula/restrito.html')
 
+# Redirecionamento do logout
 def LogoutView(request):
     logout(request)
     return redirect('login')

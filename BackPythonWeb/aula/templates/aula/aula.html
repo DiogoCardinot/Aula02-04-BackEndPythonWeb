@@ -1,14 +1,22 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/aula.css' %}">
     <title>Página Inicial</title>
 </head>
 <body>
-    <h1>Bem-vindo à Página Inicial</h1>
-    <a href="{% url 'listar_alunos' %}">
-        <button>Ir para a lista de alunos</button>
-    </a>
+    <div class="aula-wrapper">
+        <h1 class="title">Bem-vindo à Página Inicial</h1>
+        <a href="{% url 'listar_alunos' %}" class="link">
+            <button class="botao">Lista de alunos</button>
+        </a>
+        <a href="{% url 'restrito' %}" class="link">
+            <button class="botao">Conteúdo restrito</button>
+        </a>
+    </div>
 </body>
 </html>

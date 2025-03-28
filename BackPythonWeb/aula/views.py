@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,  redirect
 from .models import Aluno
 import requests
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+
 
 def Home(request):
     return render(request, 'aula/aula.html')
@@ -23,3 +26,12 @@ def ConsumirAPI(request):
         'usuariosAPI': usuariosAPI
     }
     return render(request, 'aula/ConsumirAPI.html', context)
+
+
+@login_required(login_url='/aula/login/')
+def PaginaRestrita(request):
+    return render(request, 'aula/restrito.html')
+
+def LogoutView(request):
+    logout(request)
+    return redirect('login')

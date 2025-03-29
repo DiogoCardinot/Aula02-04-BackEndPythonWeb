@@ -47,7 +47,7 @@ def BuscarAlunos(request):
     # Quantidade de alunos com idade > 23
     alunos_orm_total = Aluno.objects.filter(idade__gt=23).count()
 
-    # Busca usando SQL puro: alunos com idade < 23
+    # Busca usando SQL puro: alunos com idade <= 23
     with connection.cursor() as cursor:
         cursor.execute("SELECT id, nome, idade, email, data_de_nascimento FROM aula_aluno WHERE idade <= 23")
         alunos_sql = [
@@ -61,7 +61,7 @@ def BuscarAlunos(request):
             for row in cursor.fetchall()
         ]
     
-        # Quantidade de alunos com idade < 23
+        # Quantidade de alunos com idade <= 23
         cursor.execute("SELECT COUNT(*) FROM aula_aluno WHERE idade <= 23")
         alunos_sql_total = cursor.fetchone()[0]
 

@@ -3,6 +3,7 @@ from .models import Aluno
 import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.db import connection
 
 
 def Home(request):
@@ -38,3 +39,37 @@ def PaginaRestrita(request):
 def LogoutView(request):
     logout(request)
     return redirect('login')
+
+# ORM x SQL
+def BuscarAlunos(request):
+    # Busca usando ORM: alunos com idade > 23
+    alunos_orm = Aluno.objects.filter(idade__gt=23)
+    # Quantidade de alunos com idade > 23
+    alunos_orm_total = Aluno.objects.filter(idade__gt=23).count()
+
+    # Busca usando SQL puro: alunos com idade < 23
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id, nome, idade, email, data_de_nascimento FROM aula_aluno WHERE idade <= 23")
+        alunos_sql = [
+            {
+                "id": row[0],
+                "nome": row[1],
+                "idade": row[2],
+                "email": row[3],
+                "data_de_nascimento": row[4],
+            }
+            for row in cursor.fetchall()
+        ]
+    
+        # Quantidade de alunos com idade < 23
+        cursor.execute("SELECT COUNT(*) FROM aula_aluno WHERE idade <= 23")
+        alunos_sql_total = cursor.fetchone()[0]
+
+    context = {
+        'alunos_orm': alunos_orm,
+        'alunos_orm_total':alunos_orm_total,
+        'alunos_sql': alunos_sql,
+        'alunos_sql_total': alunos_sql_total,
+    }
+
+    return render(request, 'aula/buscar_alunos.html', context)

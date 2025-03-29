@@ -9,4 +9,5 @@ urlpatterns = [
     path('restrito/', views.PaginaRestrita, name='restrito'),
     path('logout/', views.LogoutView, name='logout'),
     path('login/', auth_views.LoginView.as_view(template_name='aula/login.html'), name='login'), 
+    path('buscar_alunos/', views.BuscarAlunos, name='buscar_alunos'),
 ]

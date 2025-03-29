@@ -77,3 +77,12 @@ p {
     color: rgb(255, 255, 255); 
     font-size: 20px;
 }
+
+h2{
+    color: white;
+}
+.table-wrapper{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}

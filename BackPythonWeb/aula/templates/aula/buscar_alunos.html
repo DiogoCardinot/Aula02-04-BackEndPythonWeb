@@ -1,0 +1,73 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/alunos.css' %}">
+    <title>Lista de Alunos</title>
+</head>
+<body>
+    <div class="alunos-wrapper">
+        <h1 class="title">Lista de Alunos</h1>
+        <div class="table-wrapper">
+            <div>
+                <h2>ORM</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Email</th>
+                            <th>Data de Nascimento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aluno_orm in alunos_orm %}
+                        <tr>
+                            <td>{{ aluno_orm.nome }}</td>
+                            <td>{{ aluno_orm.idade }}</td>
+                            <td>{{ aluno_orm.email }}</td>
+                            <td>{{ aluno_orm.data_de_nascimento }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Total de alunos ORM: {{alunos_orm_total}}</p>
+            </div>
+            <div>
+                <h2>SQL</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>Email</th>
+                            <th>Data de Nascimento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aluno_sql in alunos_sql %}
+                        <tr>
+                            <td>{{ aluno_sql.nome }}</td>
+                            <td>{{ aluno_sql.idade }}</td>
+                            <td>{{ aluno_sql.email }}</td>
+                            <td>{{ aluno_sql.data_de_nascimento }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p>Total de alunos SQL: {{alunos_sql_total}}</p>
+            </div>
+            
+        </div>
+        <a href="{% url 'home' %}" class="link">
+            <button class="botao">Voltar</button>
+        </a>
+        </div>
+        
+    </div>
+   
+</body>
+</html>

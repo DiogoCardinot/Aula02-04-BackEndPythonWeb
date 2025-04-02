@@ -4,6 +4,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db import connection
+import time
 
 
 def Home(request):
@@ -42,11 +43,14 @@ def LogoutView(request):
 
 # ORM x SQL
 def BuscarAlunos(request):
+    comecoORM = time.time()
     # Busca usando ORM: alunos com idade > 23
     alunos_orm = Aluno.objects.filter(idade__gt=23)
     # Quantidade de alunos com idade > 23
     alunos_orm_total = Aluno.objects.filter(idade__gt=23).count()
+    finalORM = time.time()
 
+    comecoSQL = time.time()
     # Busca usando SQL puro: alunos com idade <= 23
     with connection.cursor() as cursor:
         cursor.execute("SELECT id, nome, idade, email, data_de_nascimento FROM aula_aluno WHERE idade <= 23")
@@ -64,12 +68,14 @@ def BuscarAlunos(request):
         # Quantidade de alunos com idade <= 23
         cursor.execute("SELECT COUNT(*) FROM aula_aluno WHERE idade <= 23")
         alunos_sql_total = cursor.fetchone()[0]
-
+    finalSQL= time.time()
     context = {
         'alunos_orm': alunos_orm,
         'alunos_orm_total':alunos_orm_total,
+        'tempoORM': finalORM- comecoORM,
         'alunos_sql': alunos_sql,
         'alunos_sql_total': alunos_sql_total,
+        'tempoSQL': finalSQL- comecoSQL,
     }
 
     return render(request, 'aula/buscar_alunos.html', context)
